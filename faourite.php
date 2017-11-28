@@ -10,7 +10,7 @@
  
    $user = 'root';
    $pass = '';
-   $db = 'favourite';
+   $db = 'favourites';
    
    $conn = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
    
@@ -36,7 +36,7 @@
 	//insert
 	if(isset($_POST['save']))
 	{
-		$sql = "INSERT INTO favourite (username, location)
+		$sql = "INSERT INTO favourites (username, location)
 		VALUES ('".$_SESSION['username']."','".$_POST["location"]."')";
 
 		$result = mysqli_query($conn,$sql);
