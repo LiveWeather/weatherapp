@@ -1,4 +1,12 @@
-	 <?php 
+		<h2><b>ADD</b></h2>
+	<form action="" method="post"> 
+	
+
+	<label id="first">Location</label><br/>
+	<input type="salary" name="location"><br/>
+	<input type="submit" name="save"/>
+			</form>	
+<?php 
  
    $user = 'root';
    $pass = '';
