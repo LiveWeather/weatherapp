@@ -49,7 +49,8 @@
 							<p>Search <span class="glyphicon glyphicon-search"></span></p>
 						</a>
 						</l1>
-						<li class="navigation"><a href="index.php?logout='1'" style="color: red;">logout</a></li>
+						<li class="navigation"><a href="favourite.php?" style="color: blue;">Favourites</a></li>
+						<li class="navigation"><a href="index.php?logout='1'" style="color: red;">Logout</a></li>
 
 				</ul>
 
@@ -84,6 +85,7 @@
 				<li data-target="#myCarousel" data-slide-to="1"></li>
 				<li data-target="#myCarousel" data-slide-to="2"></li>
 				<li data-target="#myCarousel" data-slide-to="3"></li>
+				<li data-target="#myCarousel" data-slide-to="4"></li>
 			</ol>
 
 			<!-- Wrapper for slides -->
@@ -192,14 +194,14 @@
 			
 					<hr/>
 					
-					<input type="text" name="name" placeholder="Your desired place" />
+					<input type="text" name="name" placeholder="Enter a place of your choice" />
 					<input type="submit"></input>
 					
 					<div class="text-center warn">
 						<p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 		{
    		echo "Do not include spaces";
-		}
+		}	
 	else{echo "";} ?></p>
             <p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 		{
@@ -228,27 +230,95 @@
 					<hr/>
 				
 			</form>
-			</div>
-		</div>	
-</div>
 
+			</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+					<form action="" method="post"> 
+						<h1>
+							Add Favourites
+						</h1>
+				<input type="salary" name="location" placeholder="Your Favourite">
+						<input type="submit" name="save"></input>
+				<div class="text-center warn">
+					<?php if(!isset($_POST['location']) || trim($_POST['location']) == '')
+		{
+   		echo "Input Field is empty";
+		}	
+	else{
+	
+ 
+   $user = 'root';
+   $pass = '';
+   $db = 'favourites';
+   
+   $conn = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+   
+
+
+	if(isset($_POST['save']))
+	{
+		$sql = "INSERT INTO favourites (username, location)
+		VALUES ('".$_SESSION['username']."','".$_POST["location"]."')";
+
+		$result = mysqli_query($conn,$sql);
+		echo "Saved";
+	}
+	}
+
+?>
+				</div>
+			</form>
+		
+					</div>
+				
+
+			
+			</div>
+		</div>				
+</div>
+</div>
+			
+			
+
+	<div class="container today">
 	<div class="container" id="temp">
 		<div class="row">
-			<h3 id="fav">Today's temperature</h3>
+			<h3 class="text-center" id="fav">Today's temperature</h3>
+				<div class="container text-center">
+			<p>
+				<?php
+				  if(!isset($_POST['name']) || trim($_POST['name']) == '')
+{
+  echo"";
+}
+	else{echo "Showing temperature for ".$_POST['name']."";} ?>
+					</p>
+		</div>
+			
 
 			<br/>
-
-			<div class="col-md-2 ">
+			
+			<div class="col-md-1">
+				
+			</div>
+			
+			<div class="col-md-1">
+				
+			</div>	
+			
+			<div class="col-md-3">
 
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
   echo"";
 }
 	else{
-				echo "Temperature " .$json->temp_c.'<br/>';
-				echo "Feels like " .$json->feelslike_c .'<br/> ';
-        echo "Wind Speed " .$json->windspd_kmh .'<br/> ';
-        echo "Humidity "   .$json->humid_pct .'<br/> ';} ?>
+				echo "Temperature " .$json->temp_c." .C".'<br/>';
+				echo "Feels like " .$json->feelslike_c ." .C".'<br/> ';
+        echo "Wind Speed " .$json->windspd_kmh ." kmph".'<br/> ';
+        echo "Humidity "   .$json->humid_pct ." %".'<br/> ';} ?>
 			</div>
 			<?php		if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
@@ -261,135 +331,172 @@ $e='?app_id=02694b99&app_key=ce8ea19839f35b0e536bc9ea656d8d77';
        ;
 $xml1 = file_get_contents($xml1_string);
 $json = json_decode($xml1); }?>
-				<div class="col-md-2 ">
+				<div class="col-md-3">
 					<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
 }
 	else{ echo "Date ". $json->Days[0]->date.'<br/> ';
-      echo "Maximum Temperature ". $json->Days[0]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ". $json->Days[0]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ".$json->Days[0]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ".$json->Days[0]->humid_min_pct.'<br/> ';
-      echo "Maximum windspeed ".$json->Days[0]->windspd_max_kmh.'<br/> ';
-      echo "Total Rainfall ".$json->Days[0]->rain_total_mm.'<br/> ';}?>
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
-
-				<div class="col-md-2 ">
-
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
+      echo "Maximum Temperature ". $json->Days[0]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ". $json->Days[0]->temp_min_c. " .C".'<br/> ';
+      echo "Maximum Humidity ".$json->Days[0]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ".$json->Days[0]->humid_min_pct. " %".'<br/> ';
+      echo "Maximum windspeed ".$json->Days[0]->windspd_max_kmh." kmph".'<br/> ';
+      echo "Total Rainfall ".$json->Days[0]->rain_total_mm." mm".'<br/> ';}?>
+				</div>		
 		</div>
 	</div>
+	
+	</div>	
+			
+	<hr/>
+			
 	<div class="container ">
 		<div class="row ">
-			<h3 id="fav ">Forecast Temperature</h3>
+			<h3 class="text-center" id="fav ">Forecast Temperature</h3>
+			
+			<div class="container text-center">
+			<p>
+				<?php 
+				 if(!isset($_POST['name']) || trim($_POST['name']) == '')
+{
+  echo"";
+}
+	else{echo "Showing temperature for ".$_POST['name']."";} ?>
+					</p>
+			</div>
 
 			<br/>
 
-			<div class="col-md-2 ">
+			<div class="col-md-4">
+				<p class="text-center"></p>
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
 }
 	else{   echo "Date ". $json->Days[1]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[1]->temp_max_c.'<br/> ';
-      echo  "Minimum Temperature ". $json->Days[1]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[1]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[1]->humid_min_pct.'<br/> ';
-      echo  "Maximum windspeed ".$json->Days[1]->windspd_max_kmh.'<br/> ';
-      echo  "Total Rainfall ".$json->Days[1]->rain_total_mm.'<br/> '; }?>
+      echo "Maximum Temperature ".  $json->Days[1]->temp_max_c." .C".'<br/> ';
+      echo  "Minimum Temperature ". $json->Days[1]->temp_min_c." C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[1]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[1]->humid_min_pct." %".'<br/> ';
+      echo  "Maximum windspeed ".$json->Days[1]->windspd_max_kmh." kmph".'<br/> ';
+      echo  "Total Rainfall ".$json->Days[1]->rain_total_mm." mm".'<br/> '; }?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
 }
 	else{
       echo "Date ". $json->Days[2]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[2]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ".  $json->Days[2]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[2]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[2]->humid_min_pct.'<br/> ';
-      echo  "Maximum windspeed ".$json->Days[2]->windspd_max_kmh.'<br/> ';
-      echo "Total Rainfall ".$json->Days[2]->rain_total_mm.'<br/> ';}?>
+      echo "Maximum Temperature ".  $json->Days[2]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ".  $json->Days[2]->temp_min_c." .C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[2]->humid_max_pct. " %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[2]->humid_min_pct." %".'<br/> ';
+      echo  "Maximum windspeed ".$json->Days[2]->windspd_max_kmh." kmph".'<br/> ';
+      echo "Total Rainfall ".$json->Days[2]->rain_total_mm." mm".'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php   if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
 }
 	else{    echo "Date ". $json->Days[3]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[3]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ".  $json->Days[3]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[3]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[3]->humid_min_pct.'<br/> ';
-      echo  "Maximum windspeed ".$json->Days[3]->windspd_max_kmh.'<br/> ';
-      echo  "Total Rainfall ".$json->Days[3]->rain_total_mm.'<br/> ';}?>
+      echo "Maximum Temperature ".  $json->Days[3]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ".  $json->Days[3]->temp_min_c." .C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[3]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[3]->humid_min_pct." %".'<br/> ';
+      echo  "Maximum windspeed ".$json->Days[3]->windspd_max_kmh." kmph".'<br/> ';
+      echo  "Total Rainfall ".$json->Days[3]->rain_total_mm." mm".'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+		</div>
+			</div>
+		
+		<br/>
+		<hr/>
+		<div class="container">
+		<div class="row">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
+	
 {
    echo "";
 }
 	else{
       echo "Date ". $json->Days[4]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[4]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ".  $json->Days[4]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[4]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[4]->humid_min_pct.'<br/> ';
-      echo "Maximum windspeed ".$json->Days[4]->windspd_max_kmh.'<br/> ';
-      echo "Total Rainfall ". $json->Days[4]->rain_total_mm.'<br/> '; }?>
+      echo "Maximum Temperature ".  $json->Days[4]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ".  $json->Days[4]->temp_min_c." .C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[4]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[4]->humid_min_pct. " %".'<br/> ';
+      echo "Maximum windspeed ".$json->Days[4]->windspd_max_kmh." kmph".'<br/> ';
+      echo "Total Rainfall ". $json->Days[4]->rain_total_mm." mm".'<br/> '; }?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php  if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
 }
 	else{ echo "Date ". $json->Days[5]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[5]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ".  $json->Days[5]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[5]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[5]->humid_min_pct.'<br/> ';
-      echo  "Maximum windspeed ".$json->Days[5]->windspd_max_kmh.'<br/> ';
-      echo "Total Rainfall ". $json->Days[5]->rain_total_mm.'<br/> ';}?>
+      echo "Maximum Temperature ".  $json->Days[5]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ".  $json->Days[5]->temp_min_c." .C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[5]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[5]->humid_min_pct." %".'<br/> ';
+      echo  "Maximum windspeed ".$json->Days[5]->windspd_max_kmh." kmph".'<br/> ';
+      echo "Total Rainfall ". $json->Days[5]->rain_total_mm." mm".'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo "";
 }
 	else{
       echo "Date ". $json->Days[6]->date.'<br/> ';
-      echo "Maximum Temperature ".  $json->Days[6]->temp_max_c.'<br/> ';
-      echo "Minimum Temperature ".  $json->Days[6]->temp_min_c.'<br/> ';
-      echo "Maximum Humidity ". $json->Days[6]->humid_max_pct.'<br/> ';
-      echo "Minimum Humidity ". $json->Days[6]->humid_min_pct.'<br/> ';
-      echo "Maximum windspeed ". $json->Days[6]->windspd_max_kmh.'<br/> ';
-      echo "Total Rainfall ". $json->Days[6]->rain_total_mm.'<br/> ';} ?>
+      echo "Maximum Temperature ".  $json->Days[6]->temp_max_c." .C".'<br/> ';
+      echo "Minimum Temperature ".  $json->Days[6]->temp_min_c." .C".'<br/> ';
+      echo "Maximum Humidity ". $json->Days[6]->humid_max_pct." %".'<br/> ';
+      echo "Minimum Humidity ". $json->Days[6]->humid_min_pct." %".'<br/> ';
+      echo "Maximum windspeed ". $json->Days[6]->windspd_max_kmh." kmph".'<br/> ';
+      echo "Total Rainfall ". $json->Days[6]->rain_total_mm." mm".'<br/> ';} ?>
 			</div>
-		</div>
 	</div>
+			</div>
+
+	
+	<hr/>		
+	<br/>
+	
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script>
+		$(function() {
+			$('a[href*="#"]:not([href="#myCarousel"])').click(function() {
+				if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+					var target = $(this.hash);
+					target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+				if (target.length) {
+					$('html, body').animate({
+					scrollTop: target.offset().top
+					}, 1000);
+					return false;
+					}
+				}	
+			});
+		});
+		</script>
 
 	<?php endif ?>
 
 		<div class="footer">
 			<div class="container">	
 				<footer>
-					&copy; The Weather App
+					&copy; The Weather Application
 					<br/>
 					<a href="#top">Back To Top</a>
 				</footer>
 			</div>
 		</div>
+		
+
 		
 </body>
 
