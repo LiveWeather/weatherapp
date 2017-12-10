@@ -1,4 +1,7 @@
 <?php 
+//Reference-https://codewithawa.com/posts/complete-user-registration-system-using-php-and-mysql-database
+//Youtube-Tutorial-https://www.youtube.com/watch?v=C--mu07uhQw
+//Only the session function taken from the above links
 	session_start(); 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -185,32 +188,28 @@
 
 	<br/>
 	<br/>
+	<hr/>
 
 	<div class="container text-center" id="search">
 		<div class="row">
 			<div class="col-md-12">
 				<form action="" method="post">
 					<h1>Weather</h1>
-			
-					<hr/>
 					
-					<input type="text" name="name" placeholder="Enter a place of your choice" />
+					<input type="text" name="name" placeholder="Enter City Name" />
 					<input type="submit"></input>
 					
 					<div class="text-center warn">
-						<p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
-		{
-   		echo "Do not include spaces";
-		}	
-	else{echo "";} ?></p>
+						
             <p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 		{
-   		echo "The search bar is empty";
+   		echo "";
 		}
 	else{
-//current weather
+//Current weather
         $link1="https://maps.googleapis.com/maps/api/geocode/json?address=";
         $link2= $_POST['name'];
+				$link2=str_replace(" ", "", $link2);
         $link3="&key=AIzaSyA0W7gxcPBJ3NNN5BH4nVRs-dLVM4zems4";
         $url=$link1.$link2.$link3;
         $json=file_get_contents($url);
@@ -227,8 +226,6 @@
 ?></p>
 					</div>
 				
-					<hr/>
-				
 			</form>
 
 			</div>
@@ -239,12 +236,12 @@
 						<h1>
 							Add Favourites
 						</h1>
-				<input type="salary" name="location" placeholder="Your Favourite">
+				<input type="salary" name="location" placeholder="Enter Favourite City">
 						<input type="submit" name="save"></input>
 				<div class="text-center warn">
 					<?php if(!isset($_POST['location']) || trim($_POST['location']) == '')
 		{
-   		echo "Input Field is empty";
+   		echo "";
 		}	
 	else{
 	
@@ -278,9 +275,9 @@
 			</div>
 		</div>				
 </div>
-</div>
-			
-			
+		
+	<br/>
+	<hr/>
 
 	<div class="container today">
 	<div class="container" id="temp">
