@@ -28,14 +28,14 @@
 								</button>
 			<div class="collapse navbar-collapse navHeaderCollapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="navigation"><a href="index.html"><span>Home</span></a></li>
-					<li class="navigation">
-						<a>
-							<p>Search <span class="glyphicon glyphicon-search"></span></p>
-						</a>
-						</l1>
+					<li class="navigation"><a href="home.php"><span>Home</span></a></li>
             <li class="navigation"><a href="register.php"><span>Register</span></a></li>
             <li class="navigation"><a href="login.php"><span>Login</span></a></li>
+					<li class="navigation">
+						<a href="#search">
+							<p>Search <span class="glyphicon glyphicon-search"></span></p>
+						</a>
+						</li>
 				</ul>
 
 			</div>
@@ -66,14 +66,14 @@
 					<div class="carousel-caption">
 						<h2>Dublin</h2>
 						<?php
-$xml_string='http://api.weatherunlocked.com/api/current/53.3498053,-6.2603097?app_id=02694b99&app_key=ce8ea19839f35b0e536bc9ea656d8d77';
-$xml = file_get_contents($xml_string);
-$json = json_decode($xml);?>
+								$xml_string='http://api.weatherunlocked.com/api/current/53.3498053,-6.2603097?app_id=02694b99&app_key=ce8ea19839f35b0e536bc9ea656d8d77';
+								$xml = file_get_contents($xml_string);
+								$json = json_decode($xml);?>
 							<h3>
 								<?php echo "Temperature " .$json->temp_c .".c".'<br/>';
-echo "Feels like " .$json->feelslike_c .".c\n".'<br/>';
-echo "Wind Speed " .$json->windspd_kmh ."kmph\n".'<br/>';
-echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
+									echo "Feels like " .$json->feelslike_c .".c\n".'<br/>';
+									echo "Wind Speed " .$json->windspd_kmh ."kmph\n".'<br/>';
+									echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 
 					</div>
 				</div>
@@ -95,7 +95,7 @@ echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 				</div>
 
 				<div class="item">
-					<img src="http://media.theservicecorporation.se/2013/11/Colorful-New-York-City-1920x1080.jpg">
+					<img src="https://wallpaperscraft.com/image/new_york_home_skyscrapers_rooftops_sunset_59215_1920x1080.jpg">
 					<div class="carousel-caption">
 						<h2>New York</h2>
 						<?php
@@ -158,7 +158,7 @@ echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 	<br/>
 	<br/>
 
-	<div class="container text-center">
+	<div class="container text-center" id="search">
 		<div class="row">
 			<div class="col-md-12">
 				<form action="" method="post">
@@ -166,15 +166,11 @@ echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 			
 					<hr/>
 					
-					<input type="text" name="name" placeholder="Your desired place" />
-					<input type="submit"></input>
+					<input class="text-center" type="text" name="name" placeholder="Enter City" />
+					<input type="Submit"></input>
 					
 					<div class="text-center warn">
-						<p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
-		{
-   		echo "Do not include spaces";
-		}
-	else{echo "";} ?></p>
+						<!--Form Validity-->
             <p><?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 		{
    		echo "The search bar is empty";
@@ -183,6 +179,7 @@ echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 //current weather
         $link1="https://maps.googleapis.com/maps/api/geocode/json?address=";
         $link2= $_POST['name'];
+				$link2=str_replace(" ", "", $link2);
         $link3="&key=AIzaSyA0W7gxcPBJ3NNN5BH4nVRs-dLVM4zems4";
         $url=$link1.$link2.$link3;
         $json=file_get_contents($url);
@@ -206,14 +203,34 @@ echo "Humidity "   .$json->humid_pct ."%\n".'<br/>';?> </h3>
 		</div>	
 </div>
 			
-	
+	<div class="container today">
 	<div class="container" id="temp">
 		<div class="row">
-			<h3 id="fav">Today's temperature</h3>
+			<h3 class="text-center" id="fav">Today's temperature</h3>
+				<div class="container text-center">
+			<p>
+				<?php
+				 if(!isset($_POST['name']) || trim($_POST['name']) == '')
+{
+  echo"";
+}
+	else{
+				echo "Showing temperature for ".$_POST['name']."";} ?>
+					</p>
+		</div>
+			
 
 			<br/>
-
-			<div class="col-md-2 ">
+			
+			<div class="col-md-1">
+				
+			</div>
+			
+			<div class="col-md-1">
+				
+			</div>	
+			
+			<div class="col-md-3">
 
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
@@ -236,7 +253,7 @@ $e='?app_id=02694b99&app_key=ce8ea19839f35b0e536bc9ea656d8d77';
        ;
 $xml1 = file_get_contents($xml1_string);
 $json = json_decode($xml1); }?>
-				<div class="col-md-2 ">
+				<div class="col-md-3">
 					<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
@@ -248,29 +265,34 @@ $json = json_decode($xml1); }?>
       echo "Minimum Humidity ".$json->Days[0]->humid_min_pct.'<br/> ';
       echo "Maximum windspeed ".$json->Days[0]->windspd_max_kmh.'<br/> ';
       echo "Total Rainfall ".$json->Days[0]->rain_total_mm.'<br/> ';}?>
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
-
-				<div class="col-md-2 ">
-
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
-				<div class="col-md-2 ">
-
-				</div>
+				</div>		
 		</div>
 	</div>
+	
+	</div>	
+			
+	<hr/>
+			
 	<div class="container ">
 		<div class="row ">
-			<h3 id="fav ">Forecast Temperature</h3>
+			<h3 class="text-center" id="fav ">Forecast Temperature</h3>
+			
+			<div class="container text-center">
+			<p>
+				<?php 
+				 if(!isset($_POST['name']) || trim($_POST['name']) == '')
+{
+  echo"";
+}
+	else{
+		echo "Showing temperature for ".$_POST['name']."";} ?>
+					</p>
+			</div>
 
 			<br/>
 
-			<div class="col-md-2 ">
+			<div class="col-md-4">
+				<p class="text-center"></p>
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
@@ -283,7 +305,7 @@ $json = json_decode($xml1); }?>
       echo  "Maximum windspeed ".$json->Days[1]->windspd_max_kmh.'<br/> ';
       echo  "Total Rainfall ".$json->Days[1]->rain_total_mm.'<br/> '; }?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
@@ -297,7 +319,7 @@ $json = json_decode($xml1); }?>
       echo  "Maximum windspeed ".$json->Days[2]->windspd_max_kmh.'<br/> ';
       echo "Total Rainfall ".$json->Days[2]->rain_total_mm.'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php   if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
@@ -310,8 +332,15 @@ $json = json_decode($xml1); }?>
       echo  "Maximum windspeed ".$json->Days[3]->windspd_max_kmh.'<br/> ';
       echo  "Total Rainfall ".$json->Days[3]->rain_total_mm.'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+		</div>
+		
+		<br/>
+		<hr/>
+		
+		<div class="row">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
+	
 {
    echo "";
 }
@@ -324,7 +353,7 @@ $json = json_decode($xml1); }?>
       echo "Maximum windspeed ".$json->Days[4]->windspd_max_kmh.'<br/> ';
       echo "Total Rainfall ". $json->Days[4]->rain_total_mm.'<br/> '; }?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php  if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo " ";
@@ -337,7 +366,7 @@ $json = json_decode($xml1); }?>
       echo  "Maximum windspeed ".$json->Days[5]->windspd_max_kmh.'<br/> ';
       echo "Total Rainfall ". $json->Days[5]->rain_total_mm.'<br/> ';}?>
 			</div>
-			<div class="col-md-2 ">
+			<div class="col-md-4">
 				<?php if(!isset($_POST['name']) || trim($_POST['name']) == '')
 {
    echo "";
@@ -351,13 +380,36 @@ $json = json_decode($xml1); }?>
       echo "Maximum windspeed ". $json->Days[6]->windspd_max_kmh.'<br/> ';
       echo "Total Rainfall ". $json->Days[6]->rain_total_mm.'<br/> ';} ?>
 			</div>
-		</div>
 	</div>
-
+			</div>
+	
+	<hr/>		
+	<br/>
+	
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script>
+		$(function() {
+			$('a[href*="#"]:not([href="#myCarousel"])').click(function() {
+				if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+					var target = $(this.hash);
+					target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+				if (target.length) {
+					$('html, body').animate({
+					scrollTop: target.offset().top
+					}, 1000);
+					return false;
+					}
+				}	
+			});
+		});
+		</script>
+		
+			
    <div class="footer">
 			<div class="container">	
 				<footer>
-					&copy; The Weather App
+					&copy; The Weather Application
 					<br/>
 					<a href="#top">Back To Top</a>
 				</footer>
