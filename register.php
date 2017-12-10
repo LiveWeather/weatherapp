@@ -1,41 +1,44 @@
-<?php include('server.php') ?>
+<?php include('server.php') ?><!--To insert the sserver.php file-->
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Registration system PHP and MySQL</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
+
 <body>
-	<div class="header">
-		<h2>Register</h2>
-	</div>
-	
-	<form method="post" action="register.php">
+  
+<link rel="stylesheet" type="text/css" href="logreg.css">
+  <div id="header">
+   
 
-		<?php include('errors.php'); ?>
+<form action="register.php" method="post" style="border:1px solid #ccc">
 
-		<div class="input-group">
-			<label>Username</label>
-			<input type="text" name="username" value="<?php echo $username; ?>">
-		</div>
-		<div class="input-group">
-			<label>Email</label>
-			<input type="email" name="email" value="<?php echo $email; ?>">
-		</div>
-		<div class="input-group">
-			<label>Password</label>
+  <?php include('errors.php'); ?>  <!--displays error-->
+   <h2>Signup Form</h2>
+  <div class="container">
+    <label><b>Name</b></label>
+    <input type="text" placeholder="Enter name" name="username" required>
+    
+    <label><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+
+    <label>Password</label>
 			<input type="password" name="password_1">
-		</div>
-		<div class="input-group">
-			<label>Confirm password</label>
+
+    <label>Repeat password</label>
 			<input type="password" name="password_2">
 		</div>
-		<div class="input-group">
-			<button type="submit" class="btn" name="reg_user">Register</button>
-		</div>
-		<p>
-			Already a member? <a href="login.php">Sign in</a>
+    
+
+    <div class="clearfix">
+      <button type="submit" class="btn" name="reg_user">Sign Up</button>
+    </div>
+  
+ 
+  <p>
+			Already a member? <a href="login.php">Log in</a>  <!--Redirects user to login.php page-->
+
 		</p>
-	</form>
+</form>
+  </div>
+
+
 </body>
 </html>
