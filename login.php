@@ -1,35 +1,35 @@
-<?php include('server.php') ?>
+<?php include('server.php') ?><!--To insert the sserver.php file-->
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Registration system PHP and MySQL</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
+
 <body>
+  
+<link rel="stylesheet" type="text/css" href="logreg.css">
+  <div id="header">
+   
 
-	<div class="header">
-		<h2>Login</h2>
-	</div>
-	
-	<form method="post" action="login.php">
+<form action="login.php" method="post" style="border:1px solid #ccc">
 
-		<?php include('errors.php'); ?>
+  <?php include('errors.php'); ?>  <!--displays error-->
+   <h2>Login</h2>
+  <div class="container">
+    <label><b>Name</b></label>
+    <input type="text" placeholder="Enter name" name="username" required>
 
-		<div class="input-group">
-			<label>Username</label>
-			<input type="text" name="username" >
-		</div>
-		<div class="input-group">
-			<label>Password</label>
+  <label>Password</label>
 			<input type="password" name="password">
-		</div>
-		<div class="input-group">
-			<button type="submit" class="btn" name="login_user">Login</button>
-		</div>
-		<p>
-			Not yet a member? <a href="register.php">Sign up</a>
+    
+
+    <div class="clearfix">
+      <button type="submit" class="btn" name="login_user">Login</button>
+    </div>
+  </div>
+  <p>
+			Register Here :  <a href="register.php">Sign Up</a>  <!--Redirects user to login.php page-->
+
 		</p>
-	</form>
+</form>
+  </div>
 
 
 </body>
