@@ -51,7 +51,7 @@ $ves="";
 					<li class="navigation"><a href="index.php"><span>Home</span></a></li>
 					<li class="navigation">
 						<a href="#search">
-							<p>Search <span class="glyphicon glyphicon-search"></span></p>
+							<p>Delete</span></p>
 						</a>
 						</l1>
 						<li class="navigation"><a href="favourite.php?" style="color: blue;">Favourites</a></li>
