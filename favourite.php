@@ -1,4 +1,7 @@
 <?php 
+//Reference-https://codewithawa.com/posts/complete-user-registration-system-using-php-and-mysql-database
+//Youtube-Tutorial-https://www.youtube.com/watch?v=C--mu07uhQw
+//Only the session function taken from the above links
 	session_start(); 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -83,22 +86,32 @@ $ves="";
 
 	<br/>
 	<br/>
+	
+	<h2 class="text-center">Welcome to the favourites tab, view live weather for your favourite locations below. <h2/>
+	
+	<hr/>
 
 	<div class="container text-center" id="search">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container">
-		<h2><b>DELETE</b></h2>
+		<h3><b>Delete your favourite locations</b></h3>
 	<form action="" method="post"> 
 	
 	<label id="first">ID</label><br/>
 	<input type="text" name="id3" placeholder="Enter Id of Location"><br/>
-
-	<button  name="delete">delete</button>
+		
+	<br/>
+		
+	<button  name="delete">Delete</button>
 		</form>
-	<h2>
+					
+		<br/>
+		<hr/>
+					
+	<h3>
 		Your favourites
-	</h2>
+	</h3>
 	
 	 <?php 
 					if(!isset($_POST['id3']) || trim($_POST['id3']) == '')
@@ -146,7 +159,7 @@ $ves="";
 		$ves=0;
 	}
   else {
-	echo "0 results";
+	echo "There are no favourites to display.";
 		$res=1;
 	}
 	
@@ -161,6 +174,7 @@ $ves="";
 				
    $link1="https://maps.googleapis.com/maps/api/geocode/json?address=";
         $link2= $loc;
+				$link2=str_replace(" ", "", $link2);
         $link3="&key=AIzaSyA0W7gxcPBJ3NNN5BH4nVRs-dLVM4zems4";
         $url=$link1.$link2.$link3;
         $json=file_get_contents($url);
